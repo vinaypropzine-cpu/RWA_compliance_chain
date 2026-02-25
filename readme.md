@@ -48,3 +48,4 @@ curl https://get.ignite.com/username/febelchain@latest! | sudo bash
 - [Ignite CLI docs](https://docs.ignite.com)
 - [Cosmos SDK docs](https://docs.cosmos.network)
 - [Developer Chat](https://discord.com/invite/ignitecli)
+// ci trigger
