@@ -1,0 +1,13 @@
+syntax = "proto3";
+package febelchain.compliance.v1;
+
+import "amino/amino.proto";
+import "gogoproto/gogo.proto";
+
+option go_package = "febelchain/x/compliance/types";
+
+// Params defines the parameters for the module.
+message Params {
+  option (amino.name) = "febelchain/x/compliance/Params";
+  option (gogoproto.equal) = true;
+}

@@ -46,6 +46,7 @@ import (
 	ibckeeper "github.com/cosmos/ibc-go/v10/modules/core/keeper"
 
 	"febelchain/docs"
+	compliancemodulekeeper "febelchain/x/compliance/keeper"
 	febelchainmodulekeeper "febelchain/x/febelchain/keeper"
 )
 
@@ -101,6 +102,7 @@ type App struct {
 	// simulation manager
 	sm               *module.SimulationManager
 	FebelchainKeeper febelchainmodulekeeper.Keeper
+	ComplianceKeeper compliancemodulekeeper.Keeper
 }
 
 func init() {
@@ -181,6 +183,7 @@ func New(
 		&app.CircuitBreakerKeeper,
 		&app.ParamsKeeper,
 		&app.FebelchainKeeper,
+		&app.ComplianceKeeper,
 	); err != nil {
 		panic(err)
 	}
@@ -191,6 +194,16 @@ func New(
 
 	// build app
 	app.App = appBuilder.Build(db, traceStore, baseAppOptions...)
+
+	// --- CUSTOM ANTE HANDLER REGISTRATION ---
+
+	complianceDecorator := NewComplianceDecorator(app.ComplianceKeeper)
+
+	app.SetAnteHandler(
+		sdk.ChainAnteDecorators(
+			complianceDecorator,
+		),
+	)
 
 	// register legacy modules
 	if err := app.registerIBCModules(appOpts); err != nil {

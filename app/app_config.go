@@ -1,6 +1,8 @@
 package app
 
 import (
+	_ "febelchain/x/compliance/module"
+	compliancemoduletypes "febelchain/x/compliance/types"
 	_ "febelchain/x/febelchain/module"
 	febelchainmoduletypes "febelchain/x/febelchain/types"
 	"time"
@@ -126,6 +128,7 @@ var (
 						ibcexported.ModuleName,
 						// chain modules
 						febelchainmoduletypes.ModuleName,
+						compliancemoduletypes.ModuleName,
 						// this line is used by starport scaffolding # stargate/app/beginBlockers
 					},
 					EndBlockers: []string{
@@ -135,6 +138,7 @@ var (
 						group.ModuleName,
 						// chain modules
 						febelchainmoduletypes.ModuleName,
+						compliancemoduletypes.ModuleName,
 						// this line is used by starport scaffolding # stargate/app/endBlockers
 					},
 					// The following is mostly only needed when ModuleName != StoreKey name.
@@ -172,6 +176,7 @@ var (
 						icatypes.ModuleName,
 						// chain modules
 						febelchainmoduletypes.ModuleName,
+						compliancemoduletypes.ModuleName,
 						// this line is used by starport scaffolding # stargate/app/initGenesis
 					},
 				}),
@@ -271,6 +276,10 @@ var (
 			{
 				Name:   febelchainmoduletypes.ModuleName,
 				Config: appconfig.WrapAny(&febelchainmoduletypes.Module{}),
+			},
+			{
+				Name:   compliancemoduletypes.ModuleName,
+				Config: appconfig.WrapAny(&compliancemoduletypes.Module{}),
 			},
 			// this line is used by starport scaffolding # stargate/app/moduleConfig
 		},
